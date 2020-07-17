@@ -8,6 +8,8 @@ export default function Field(props) {
   const [openCells, setOpenCells] = useState(0);
   const totalCellsToOpenToWin = rows * columns - mines;
   const [err, setErr] = useState('');
+  let timer = null;
+  const [startTimer, setStartTimer] = useState(false);
 
   useEffect(() => {
     initializeGames();
@@ -82,6 +84,8 @@ export default function Field(props) {
     setCells(bombPlantedCells);
     setOpenCells(0);
     setErr('');
+    timer = null;
+    setStartTimer(false);
   }
 
   const countOpenCells = (cells) => {
@@ -141,7 +145,6 @@ export default function Field(props) {
   }
 
   useEffect(() => {
-    console.log('cells updated');
     if (totalCellsToOpenToWin === openCells) {
       alert(err);
       setOpenCells(0);
@@ -150,7 +153,10 @@ export default function Field(props) {
   }, [cells, openCells]);
 
   const handleClick = (cell) => {
-    console.log(cell);
+    // console.log(cell);
+    if (!timer) {
+      setStartTimer(true);
+    }
     const cellsCopy = [...cells];
     let err = '';
 
@@ -186,12 +192,14 @@ export default function Field(props) {
     }
   }
 
+  // console.log('seconds', seconds);
+
   return (
     <div className="minesweeper-container" style={{
       width: (rows * 40) + (rows * 4),
       height: (columns * 40 + 100) + columns * 4
     }}>
-      <Header opencells={openCells} />
+      <Header opencells={openCells} startTimer={startTimer} />
       <div className="minesweeper-board">
         {
           cells.map((cell, index) => (
