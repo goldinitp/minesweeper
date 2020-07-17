@@ -7,10 +7,18 @@ export default function Field(props) {
   const [cells, setCells] = useState([]);
   const [openCells, setOpenCells] = useState(0);
   const totalCellsToOpenToWin = rows * columns - mines;
+  const [err, setErr] = useState('');
 
   useEffect(() => {
     initializeGames();
   }, []);
+
+  useEffect(() => {
+    if (err.length) {
+      alert('Game Over!!');
+      initializeGames();
+    }
+  }, [err]);
 
   const generateCells = () => {
     let cells = [];
@@ -72,6 +80,8 @@ export default function Field(props) {
     let cells = generateCells();
     let bombPlantedCells = plantBomb(cells);
     setCells(bombPlantedCells);
+    setOpenCells(0);
+    setErr('');
   }
 
   const countOpenCells = (cells) => {
@@ -133,23 +143,23 @@ export default function Field(props) {
   useEffect(() => {
     console.log('cells updated');
     if (totalCellsToOpenToWin === openCells) {
-      alert('you win!!');
+      alert(err);
       setOpenCells(0);
       initializeGames();
     }
   }, [cells, openCells]);
 
   const handleClick = (cell) => {
+    console.log(cell);
     const cellsCopy = [...cells];
+    let err = '';
 
     if (cell.isOpen) {
       return
     }
     if (cell.hasMine) {
       cellsCopy[cell.x][cell.y].isOpen = true;
-      alert('Oh no!! You lost it!!')
-      initializeGames();
-      return
+      err = 'Oh no!! You lost it!!';
     }
     if (cell.count) {
       cellsCopy[cell.x][cell.y].isOpen = true;
@@ -170,6 +180,10 @@ export default function Field(props) {
     const count = countOpenCells(cellsCopy);
     setCells([...cellsCopy]);
     setOpenCells(count);
+
+    if (err.length) {
+      setErr(err);
+    }
   }
 
   return (

@@ -11,6 +11,10 @@
   margin: 2px;
 }
 
+.hide {
+  display: none;
+}
+
 .cell-container.cell-open {
   background-color: white;
   box-shadow: none;
