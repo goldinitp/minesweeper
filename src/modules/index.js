@@ -12,8 +12,8 @@ function Minesweeper() {
     const row = prompt("Please enter rows", 10);
     const cols = prompt("Please enter columns", 10);
     const mine = prompt("Please enter mines", 20);
-    const rows = row && row < 100 ? row : 10;
-    const columns = cols && cols < 100 ? cols : 10;
+    const rows = row && row > 2 && row < 100 ? row : 10;
+    const columns = cols && cols > 2 && cols < 100 ? cols : 10;
     const mines = mine && mine < rows * columns ? mine : 20;
 
     setFiledVariables({
