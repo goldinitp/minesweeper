@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Row from '../Row/Row';
+import Header from '../header/Header';
 
 export default function Field(props) {
   const { rows, columns, mines } = props;
   const [cells, setCells] = useState([]);
+  const [openCells, setOpenCells] = useState(0);
+  const totalCellsToOpenToWin = rows * columns - mines;
 
   useEffect(() => {
     initializeGames();
@@ -71,6 +74,20 @@ export default function Field(props) {
     setCells(bombPlantedCells);
   }
 
+  const countOpenCells = (cells) => {
+    let count = 0;
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < rows; j++) {
+        if (cells[i][j].isOpen) {
+          count++
+        }
+      }
+    }
+
+    return count;
+  }
+
   const handleEmptyCell = (cell, emptyCellsQueue, makeVisibleCellsQueue) => {
     if (cell.isOpen || cell.hasMine) {
       return
@@ -113,25 +130,29 @@ export default function Field(props) {
     return
   }
 
+  useEffect(() => {
+    console.log('cells updated');
+    if (totalCellsToOpenToWin === openCells) {
+      alert('you win!!');
+      setOpenCells(0);
+      initializeGames();
+    }
+  }, [cells, openCells]);
+
   const handleClick = (cell) => {
+    const cellsCopy = [...cells];
+
     if (cell.isOpen) {
       return
     }
     if (cell.hasMine) {
-      // setTimeout(() => {
-      const cellsCopy = cells;
       cellsCopy[cell.x][cell.y].isOpen = true;
-      setCells([...cellsCopy]);
-      alert('Game over!!')
+      alert('Oh no!! You lost it!!')
       initializeGames();
-      // }, 4000);
       return
     }
     if (cell.count) {
-      const cellsCopy = cells;
       cellsCopy[cell.x][cell.y].isOpen = true;
-      setCells([...cellsCopy]);
-      return
     } else {
       // empty cases
       const emptyCellsQueue = [];
@@ -139,14 +160,16 @@ export default function Field(props) {
 
       handleEmptyCell(cell, emptyCellsQueue, makeVisibleCellsQueue);
 
-      makeVisibleCellsQueue.forEach((cell) => cells[cell.x][cell.y].isOpen = true)
-      console.log(emptyCellsQueue);
+      makeVisibleCellsQueue.forEach((cell) => cellsCopy[cell.x][cell.y].isOpen = true)
       emptyCellsQueue.forEach((cell) => {
-        const cellCordinates = cell.split(',');
-        cells[cellCordinates[0]][cellCordinates[1]].isOpen = true
+        const cellCoordinates = cell.split(',');
+        cellsCopy[cellCoordinates[0]][cellCoordinates[1]].isOpen = true
       })
-      setCells([...cells]);
     }
+
+    const count = countOpenCells(cellsCopy);
+    setCells([...cellsCopy]);
+    setOpenCells(count);
   }
 
   return (
@@ -154,7 +177,7 @@ export default function Field(props) {
       width: (rows * 40) + (rows * 4),
       height: (columns * 40 + 100) + columns * 4
     }}>
-      <div className="minesweeper-header">Header</div>
+      <Header opencells={openCells} />
       <div className="minesweeper-board">
         {
           cells.map((cell, index) => (

@@ -4,9 +4,9 @@ import Field from './Field/Field';
 
 function Minesweeper() {
   const FiledVariables = {
-    rows: 10,
-    columns: 10,
-    mines: 25,
+    rows: 5,
+    columns: 5,
+    mines: 15,
     flags: 10
   }
   return (
