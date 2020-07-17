@@ -15,7 +15,7 @@ export default function Cell(props) {
         cell.isOpen && !cell.hasMine ? <div>{cell.count ? cell.count : ''}</div> : (
           <>
             {
-              cell.hasMine ? <div className={`${cell.isOpen ? 'show' : 'hide'}`}>
+              cell.hasMine ? <div>
                 <img src={bombImg} width={25} />
               </div> : null
             }

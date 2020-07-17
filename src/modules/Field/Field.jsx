@@ -3,7 +3,7 @@ import Row from '../Row/Row';
 import Header from '../header/Header';
 
 export default function Field(props) {
-  const { rows, columns, mines } = props;
+  const { rows, columns, mines, handleInput } = props;
   const [cells, setCells] = useState([]);
   const [openCells, setOpenCells] = useState(0);
   const totalCellsToOpenToWin = rows * columns - mines;
@@ -13,14 +13,23 @@ export default function Field(props) {
 
   useEffect(() => {
     initializeGames();
-  }, []);
+  }, [rows, columns, mines]);
 
   useEffect(() => {
     if (err.length) {
-      alert('Game Over!!');
+      alert(err);
       initializeGames();
     }
   }, [err]);
+
+
+  useEffect(() => {
+    if (totalCellsToOpenToWin === openCells) {
+      alert('Congratulations!! You won');
+      setOpenCells(0);
+      initializeGames();
+    }
+  }, [cells, openCells]);
 
   const generateCells = () => {
     let cells = [];
@@ -44,8 +53,8 @@ export default function Field(props) {
 
   const plantBomb = (cells) => {
     for (let i = 0; i < mines; i++) {
-      const randomColumn = Math.floor(Math.random() * rows);
-      const randomRow = Math.floor(Math.random() * columns);
+      const randomColumn = Math.floor(Math.random() * columns);
+      const randomRow = Math.floor(Math.random() * rows);
       const randomCell = cells[randomRow][randomColumn];
 
       const indexesArray = [
@@ -92,7 +101,7 @@ export default function Field(props) {
     let count = 0;
 
     for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < rows; j++) {
+      for (let j = 0; j < columns; j++) {
         if (cells[i][j].isOpen) {
           count++
         }
@@ -144,14 +153,6 @@ export default function Field(props) {
     return
   }
 
-  useEffect(() => {
-    if (totalCellsToOpenToWin === openCells) {
-      alert(err);
-      setOpenCells(0);
-      initializeGames();
-    }
-  }, [cells, openCells]);
-
   const handleClick = (cell) => {
     // console.log(cell);
     if (!timer) {
@@ -192,14 +193,12 @@ export default function Field(props) {
     }
   }
 
-  // console.log('seconds', seconds);
-
   return (
     <div className="minesweeper-container" style={{
-      width: (rows * 40) + (rows * 4),
-      height: (columns * 40 + 100) + columns * 4
+      width: (columns * 40) + (columns * 4),
+      height: (rows * 40 + 100) + rows * 4
     }}>
-      <Header opencells={openCells} startTimer={startTimer} initializeGames={initializeGames} />
+      <Header opencells={openCells} startTimer={startTimer} initializeGames={initializeGames} handleInput={handleInput} />
       <div className="minesweeper-board">
         {
           cells.map((cell, index) => (
