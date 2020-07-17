@@ -13,14 +13,14 @@ export default function Field(props) {
 
   useEffect(() => {
     initializeGames();
-  }, [rows, columns, mines]);
+  }, [rows, columns, mines, initializeGames]);
 
   useEffect(() => {
     if (err.length) {
       alert(err);
       initializeGames();
     }
-  }, [err]);
+  }, [err, initializeGames]);
 
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function Field(props) {
       setOpenCells(0);
       initializeGames();
     }
-  }, [cells, openCells]);
+  }, [cells, openCells, initializeGames, totalCellsToOpenToWin]);
 
   const generateCells = () => {
     let cells = [];
