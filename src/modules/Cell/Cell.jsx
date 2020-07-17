@@ -16,7 +16,7 @@ export default function Cell(props) {
           <>
             {
               cell.hasMine ? <div>
-                <img src={bombImg} width={25} />
+                <img src={bombImg} width={25} alt='' />
               </div> : null
             }
           </>

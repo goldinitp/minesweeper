@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Row from '../Row/Row';
 import Header from '../header/Header';
 
@@ -10,6 +10,16 @@ export default function Field(props) {
   const [err, setErr] = useState('');
   let timer = null;
   const [startTimer, setStartTimer] = useState(false);
+
+  const initializeGames = useCallback(() => {
+    let cells = generateCells();
+    let bombPlantedCells = plantBomb(cells);
+    setCells(bombPlantedCells);
+    setOpenCells(0);
+    setErr('');
+    timer = null;
+    setStartTimer(false);
+  }, []);
 
   useEffect(() => {
     initializeGames();
@@ -85,16 +95,6 @@ export default function Field(props) {
     }
 
     return cells;
-  }
-
-  const initializeGames = () => {
-    let cells = generateCells();
-    let bombPlantedCells = plantBomb(cells);
-    setCells(bombPlantedCells);
-    setOpenCells(0);
-    setErr('');
-    timer = null;
-    setStartTimer(false);
   }
 
   const countOpenCells = (cells) => {
