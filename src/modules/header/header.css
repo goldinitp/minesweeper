@@ -1,0 +1,25 @@
+.mine-header {
+  font-family: 'Gayathri', sans-serif;
+  text-align: center;
+  font-weight: bold;
+  color: #5157a0;
+}
+
+.minesweeper-container {
+  border: 1px solid black;
+  margin: 0 auto;
+}
+
+.minesweeper-header {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #adbcc5;
+  box-shadow: inset 1px 0px 13px 4px #f0f0f5;
+}
+
+.minesweeper-board {
+  display: flex;
+  flex-wrap: wrap;
+}

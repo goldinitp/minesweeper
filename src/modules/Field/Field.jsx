@@ -11,7 +11,7 @@ export default function Field(props) {
   let timer = null;
   const [startTimer, setStartTimer] = useState(false);
 
-  const initializeGames = useCallback(() => {
+  const initializeGames = () => {
     let cells = generateCells();
     let bombPlantedCells = plantBomb(cells);
     setCells(bombPlantedCells);
@@ -19,11 +19,11 @@ export default function Field(props) {
     setErr('');
     timer = null;
     setStartTimer(false);
-  }, []);
+  };
 
   useEffect(() => {
     initializeGames();
-  }, [rows, columns, mines, initializeGames]);
+  }, [rows, columns, mines]);
 
   useEffect(() => {
     if (err.length) {

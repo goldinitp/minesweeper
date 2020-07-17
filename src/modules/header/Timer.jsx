@@ -10,7 +10,11 @@ const Timer = (props) => {
     if (!isActive && startTimer) {
       setIsActive(true);
     }
-  }, [isActive, startTimer]);
+    if (!startTimer) {
+      setIsActive(false);
+      setSeconds(0);
+    }
+  }, [startTimer]);
 
   useEffect(() => {
     let interval = null;

@@ -6,8 +6,8 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: lightsteelblue;
-  box-shadow: 0px 4px 8px 4px #cec5c5;
+  background-color: #ecf0f5;
+  box-shadow: inset 1px 0px 7px 3px #cec5c5;
   margin: 2px;
 }
 
@@ -18,8 +18,9 @@
 .cell-container.cell-open {
   background-color: white;
   box-shadow: none;
+  color: #100c44;
 }
 
 .cell-container:hover {
-  background-color: beige;
+  background-color: #adbcc5;
 }

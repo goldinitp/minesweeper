@@ -9,24 +9,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.minesweeper-container {
-  border: 1px solid black;
-  margin: 0 auto;
-}
-
-.minesweeper-header {
-  height: 100px;
-  border: 1px solid black;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.minesweeper-board {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .row-container {
   display: flex;
   justify-content: space-around;
