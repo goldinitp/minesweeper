@@ -6,7 +6,7 @@ function Minesweeper() {
   const FiledVariables = {
     rows: 10,
     columns: 10,
-    mines: 10,
+    mines: 25,
     flags: 10
   }
   return (

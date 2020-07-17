@@ -1,15 +1,27 @@
 import React from 'react';
 import './Cell.css';
+import bombImg from './bomb.png';
 
 export default function Cell(props) {
-  const { cell = [] } = props;
-  // console.log(cell);
+  const { cell = [], handleClick } = props;
 
-  const handleHover = () => {
-    console.log(cell)
+  const handleElementClick = () => {
+    handleClick(cell);
   }
+
   return (
-    <div className='cell-container' onMouseEnter={handleHover}>
-    </div>
+    <div className={`cell-container ${cell.isOpen ? 'cell-open' : ''}`} onClick={handleElementClick} >
+      {
+        cell.hasMine ? <div>
+          <img src={bombImg} width={25} />
+        </div> : (
+            <>
+              {
+                cell.isOpen ? <div>{cell.count ? cell.count : ''}</div> : null
+              }
+            </>
+          )
+      }
+    </div >
   )
 }

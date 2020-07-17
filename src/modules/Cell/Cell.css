@@ -1,7 +1,19 @@
 .cell-container {
-  border: 1px solid black;
+  outline: 1px solid black;
   width: 40px;
   height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: lightsteelblue;
+  box-shadow: 0px 4px 8px 4px #cec5c5;
+  margin: 2px;
+}
+
+.cell-container.cell-open {
+  background-color: white;
+  box-shadow: none;
 }
 
 .cell-container:hover {
