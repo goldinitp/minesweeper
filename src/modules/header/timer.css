@@ -45,3 +45,19 @@
   border: 1px solid #152684;
   color: white;
 }
+
+.timer-container {
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  font-weight: 600;
+  font-size: 20px;
+  padding: .6rem 1.5rem;
+  text-align: center;
+}
+
+.timer-lebel {
+  display: flex;
+  font-size: 2rem;
+}

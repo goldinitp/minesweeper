@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './timer.css';
 
-const Timer = () => {
+const Timer = (props) => {
+  const { startTimer } = props;
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
-  function toggle() {
-    setIsActive(!isActive);
-  }
   useEffect(() => {
-    setIsActive(true);
-  }, []);
-
-  function reset() {
-    setSeconds(0);
-    setIsActive(false);
-  }
+    if (!isActive && startTimer) {
+      setIsActive(true);
+    }
+  }, [startTimer]);
 
   useEffect(() => {
     let interval = null;
@@ -29,12 +24,24 @@ const Timer = () => {
     return () => clearInterval(interval);
   }, [isActive, seconds]);
 
+  const formatTime = (time) => {
+    return time > 9 ? time : `0${time}`;
+  }
+
+  const formatSeconds = (seconds) => {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+
+    return `${formatTime(hrs)}:${formatTime(mins)}:${formatTime(sec)}`;
+  }
+
   return (
-    // <div className="app">
-    <div>
-      {seconds}s
-    </div>
-    // </div>
+    <div div className="timer-container" >
+      {
+        startTimer ? <div>{formatSeconds(seconds)}</div> : <div>00:00:00</div>
+      }
+    </div >
   );
 };
 

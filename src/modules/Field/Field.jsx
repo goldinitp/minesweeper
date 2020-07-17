@@ -199,7 +199,7 @@ export default function Field(props) {
       width: (rows * 40) + (rows * 4),
       height: (columns * 40 + 100) + columns * 4
     }}>
-      <Header opencells={openCells} startTimer={startTimer} />
+      <Header opencells={openCells} startTimer={startTimer} initializeGames={initializeGames} />
       <div className="minesweeper-board">
         {
           cells.map((cell, index) => (
