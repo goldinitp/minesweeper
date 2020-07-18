@@ -1,5 +1,5 @@
 import React from 'react';
-import Timer from './Timer';
+import Timer from '../Timer/Timer';
 import resetIcon from './redo.svg';
 import inputIcon from './input.svg';
 import './header.css';
