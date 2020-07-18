@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Row from '../Row/Row';
 import Header from '../header/Header';
+import { countOpenCells } from '../../utility/countCells';
 
 export default function Field(props) {
   const { rows, columns, mines, handleInput } = props;
@@ -97,20 +98,6 @@ export default function Field(props) {
     return cells;
   }
 
-  const countOpenCells = (cells) => {
-    let count = 0;
-
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < columns; j++) {
-        if (cells[i][j].isOpen) {
-          count++
-        }
-      }
-    }
-
-    return count;
-  }
-
   const handleEmptyCell = (cell, emptyCellsQueue, makeVisibleCellsQueue) => {
     if (cell.isOpen || cell.hasMine) {
       return
@@ -184,7 +171,7 @@ export default function Field(props) {
       })
     }
 
-    const count = countOpenCells(cellsCopy);
+    const count = countOpenCells(cellsCopy, rows, columns);
     setCells([...cellsCopy]);
     setOpenCells(count);
 
